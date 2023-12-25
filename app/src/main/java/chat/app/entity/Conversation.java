@@ -1,16 +1,29 @@
 package chat.app.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
+@Table(name = "conversation")
 public class Conversation {
 
     public Conversation(Long id, String chatSummary) {
         this.id = id;
         this.chatSummary = chatSummary;
     }
+
+    public Conversation() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String chatSummary;
+
+
+    @OneToMany(mappedBy = "conversation")
+    private List<Message> messages;
 
 
     public Long getId() {

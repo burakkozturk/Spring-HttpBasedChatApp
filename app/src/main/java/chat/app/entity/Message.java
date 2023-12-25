@@ -1,21 +1,35 @@
 package chat.app.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
 @Entity
+@Table(name = "message")
 public class Message {
 
-    public Message(Long id, String content, String owner) {
-        this.id = id;
+
+    // Diğer constructor
+    public Message(String content, String owner, Conversation conversation) {
         this.content = content;
         this.owner = owner;
+        this.conversation = conversation;
     }
 
+
+    // Boş constructor eklenmeli
+    public Message() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     private String owner;
+
+
+    @ManyToOne
+    private Conversation conversation;
 
 
     public Long getId() {
